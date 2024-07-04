@@ -42,9 +42,20 @@ res.json({
 })
 };
 
+const deleteProductFromDB = async(req: Request, res: Response)=>{
+const productId = req.params.productId;
+const result = await ProductServices.deleteProductFromDB(productId);
+res.json({
+  success: true,
+  message: 'Product deleted successfully',
+  data: result,
+})
+};
+
 export const ProductController = {
   createProduct,
   getProductsFromDB,
   getProductByID,
-  updateProductIntoDB
+  updateProductIntoDB,
+  deleteProductFromDB
 }
