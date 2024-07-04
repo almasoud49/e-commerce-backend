@@ -18,4 +18,12 @@ export type TProduct = {
   tags: string[]; 
   variants: TVariant[]; 
   inventory: TInventory; 
-}
+};
+
+export type TSearch = {
+  searchTerm: string ;
+  name: string;
+  description:string;
+  category: string;
+  tags:string[]
+};

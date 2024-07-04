@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ProductServices } from './product.service'
-import { TProduct } from './product.interface';
+import { TProduct, TSearch } from './product.interface';
 
 const createProduct = async (req: Request, res: Response) => {
   const product = req.body
@@ -13,7 +13,14 @@ const createProduct = async (req: Request, res: Response) => {
 };
 
 const getProductsFromDB = async (req: Request, res: Response) => {
-  const result = await ProductServices.getProductsFromDB()
+  const searchTerm :TSearch  = req.query.searchTerm as TSearch
+  const result = await ProductServices.getProductsFromDB(searchTerm);
+
+  if(result.length ===0){
+    throw new Error('No products found matching the search term')
+
+  }
+
   res.json({
     success: true,
     message: 'Products fetched successfully',

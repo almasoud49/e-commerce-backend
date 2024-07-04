@@ -1,4 +1,4 @@
-import { TProduct } from './product.interface'
+import { TProduct, TSearch } from './product.interface'
 import { Product } from './product.model'
 
 const createProduct = async (product: TProduct) => {
@@ -6,9 +6,21 @@ const createProduct = async (product: TProduct) => {
   return result
 }
 
-const getProductsFromDB = async () => {
-  const result = await Product.find()
-  return result
+const getProductsFromDB = async (searchTerm: Partial<TSearch>) => {
+  if (searchTerm) {
+    const result = await Product.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { description: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+        { tags: { $regex: searchTerm, $options: 'i' } },
+      ],
+    })
+    return result
+  } else {
+    const result = await Product.find()
+    return result
+  }
 }
 
 const getProductByID = async (id: string) => {
