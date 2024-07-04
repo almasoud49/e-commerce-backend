@@ -9,8 +9,19 @@ const createProduct = async(req:Request, res:Response) =>{
     message:"Product created successfully",
     data:result
   })
-}
+};
+
+const getProductsFromDB = async(req:Request, res:Response) =>{
+  
+  const result = await ProductServices.getProductsFromDB()
+  res.json({
+    success: true,
+    message:"Products fetched successfully",
+    data:result
+  })
+};
 
 export const ProductController = {
-  createProduct
+  createProduct,
+  getProductsFromDB
 }
