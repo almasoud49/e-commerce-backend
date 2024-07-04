@@ -1,27 +1,36 @@
-import  { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { ProductServices } from './product.service'
 
-const createProduct = async(req:Request, res:Response) =>{
-  const product = req.body;
+const createProduct = async (req: Request, res: Response) => {
+  const product = req.body
   const result = await ProductServices.createProduct(product)
   res.json({
     success: true,
-    message:"Product created successfully",
-    data:result
+    message: 'Product created successfully',
+    data: result,
   })
 };
 
-const getProductsFromDB = async(req:Request, res:Response) =>{
-  
+const getProductsFromDB = async (req: Request, res: Response) => {
   const result = await ProductServices.getProductsFromDB()
   res.json({
     success: true,
-    message:"Products fetched successfully",
-    data:result
+    message: 'Products fetched successfully',
+    data: result,
+  })
+};
+const getProductByID = async (req: Request, res: Response) => {
+  const {id} = req.params
+  const result = await ProductServices.getProductByID(id);
+  res.json({
+    success: true,
+    message: 'Product fetched successfully',
+    data: result,
   })
 };
 
 export const ProductController = {
   createProduct,
-  getProductsFromDB
+  getProductsFromDB,
+  getProductByID
 }
