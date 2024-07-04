@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { ProductServices } from './product.service'
+import { TProduct } from './product.interface';
 
 const createProduct = async (req: Request, res: Response) => {
   const product = req.body
@@ -20,8 +21,8 @@ const getProductsFromDB = async (req: Request, res: Response) => {
   })
 };
 const getProductByID = async (req: Request, res: Response) => {
-  const {id} = req.params
-  const result = await ProductServices.getProductByID(id);
+  const productId = req.params.productId
+  const result = await ProductServices.getProductByID(productId);
   res.json({
     success: true,
     message: 'Product fetched successfully',
@@ -29,8 +30,21 @@ const getProductByID = async (req: Request, res: Response) => {
   })
 };
 
+const updateProductIntoDB = async(req: Request, res: Response)=>{
+const productId = req.params.productId;
+const product : TProduct = req.body;
+
+const result = await ProductServices.updateProductIntoDB(productId, product);
+res.json({
+  success: true,
+  message: 'Product updated successfully',
+  data: result,
+})
+};
+
 export const ProductController = {
   createProduct,
   getProductsFromDB,
-  getProductByID
+  getProductByID,
+  updateProductIntoDB
 }
