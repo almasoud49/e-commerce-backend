@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { OrderServices } from './order.service'
+import { TEmail } from './order.interface'
 
 const createOrder = async (req: Request, res: Response) => {
   const order = req.body
@@ -13,7 +14,13 @@ const createOrder = async (req: Request, res: Response) => {
 }
 
 const getOrders = async (req: Request, res: Response) => {
-  const result = await OrderServices.getOrders()
+
+  const email : TEmail = req.query.email as TEmail;
+  const result = await OrderServices.getOrders(email);
+
+  if(result.length===0){
+    throw new Error('Order Not Found')
+  }
   res.json({
     success: true,
     message: 'Orders fetched successfully',

@@ -1,7 +1,10 @@
 
+export type TEmail = {
+  email: string | undefined;
+}
 
 export type TOrder = {
-  email: string;
+  email: TEmail;
   productId: string;
   price: number;
   quantity: number;
