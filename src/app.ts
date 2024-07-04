@@ -1,7 +1,13 @@
-import express from 'express'
-const app = express()
+import express, { Request, Response } from 'express'
+import { ProductRoutes } from './modules/product/product.route';
+const app = express();
 
-app.get('/', (req, res) => {
+
+app.use(express.json());
+
+app.use("/api/products" , ProductRoutes);
+
+app.get('/', (req:Request, res:Response) => {
   res.send('Hello Everyone to My E-Commerce Backend Application!')
 })
 
