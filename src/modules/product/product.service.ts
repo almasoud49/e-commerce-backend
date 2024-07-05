@@ -29,7 +29,9 @@ const getProductByID = async (id: string) => {
 }
 
 const updateProductIntoDB = async (id: string, product: TProduct) => {
-  const result = await Product.findOneAndUpdate({ _id: id }, product)
+  const result = await Product.findOneAndUpdate({ _id: id }, product, {
+    new: true,
+  })
   return result
 }
 
